@@ -16,7 +16,10 @@ export const UserSchema = new mongoose.Schema({
         default: 'https://i.stack.imgur.com/l60Hf.png'
     },
     age: Number,
-
+    gender: {
+        required: false,
+        type: String
+    }
 });
 
 const UserModel = mongoose.model("users", UserSchema);
