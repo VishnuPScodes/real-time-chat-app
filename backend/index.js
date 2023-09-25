@@ -5,7 +5,7 @@ import { connectToMongoDB } from './configs/db.js';
 import registerUserController from './routes/reg.routes.js';
 import { Server } from "socket.io";
 import { createServer } from 'node:http';
-
+import { ChatMessage } from './models/message.model.js';
 configDotenv();
 
 const app = express();
@@ -23,6 +23,9 @@ io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('message', (data) => {
         console.log('data got', data);
+        const message = new ChatMessage({
+
+        });
         socket.emit('recieved', data.data);
     })
 });
