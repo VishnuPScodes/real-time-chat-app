@@ -23,6 +23,7 @@ io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('message', (data) => {
         console.log('data got', data);
+        socket.emit('recieved', data.data);
     })
 });
 

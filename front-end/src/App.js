@@ -9,6 +9,7 @@ import { MyForm } from './components/MyForm';
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [fooEvents, setFooEvents] = useState([]);
+  const [data, setData] = useState('');
   useEffect(() => {
     function onConnect() {
       setIsConnected(true);
@@ -25,6 +26,7 @@ function App() {
     socket.on('connection', onConnect);
     socket.on('disconnect', onDisconnect);
     socket.on('foo', onFooEvent);
+    socket.on('recieved', (data) => setData(data))
 
     return () => {
       socket.off('connection', onConnect);
@@ -37,6 +39,7 @@ function App() {
       <ConnectionState isConnected={isConnected} />
       <Events events={fooEvents} />
       <ConnectionManager />
+      <div>data {data}</div>
       <MyForm />
     </div>
   );
