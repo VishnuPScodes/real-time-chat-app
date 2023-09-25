@@ -22,12 +22,12 @@ function App() {
       setFooEvents(previous => [...previous, value]);
     }
 
-    socket.on('connect', onConnect);
+    socket.on('connection', onConnect);
     socket.on('disconnect', onDisconnect);
     socket.on('foo', onFooEvent);
 
     return () => {
-      socket.off('connect', onConnect);
+      socket.off('connection', onConnect);
       socket.off('disconnect', onDisconnect);
       socket.off('foo', onFooEvent);
     };

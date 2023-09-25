@@ -6,12 +6,11 @@ export function MyForm() {
     const [isLoading, setIsLoading] = useState(false);
 
     function onSubmit(event) {
+        console.log(('clicked'));
         event.preventDefault();
-        setIsLoading(true);
+        //setIsLoading(true);
 
-        socket.timeout(5000).emit('create-something', value, () => {
-            setIsLoading(false);
-        });
+        socket.emit('message', { data: value });
     }
 
     return (

@@ -15,10 +15,17 @@ app.use(cors());
 app.use('/register', registerUserController);
 const server = createServer(app);
 //Integrating socket.io
-const io = new Server(server);
+const io = new Server(server, { cors: { origin: "*" } });
 io.on('connection', (socket) => {
+    io.on('disconnect', () => {
+        console.log('user disconnected');
+    })
     console.log('a user connected');
+    socket.on('message', (data) => {
+        console.log('data got', data);
+    })
 });
+
 server.listen(PORT, async () => {
     try {
         await connectToMongoDB();
