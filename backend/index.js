@@ -14,6 +14,11 @@ app.use(express.json())
 app.use(cors());
 app.use('/register', registerUserController);
 const server = createServer(app);
+//Integrating socket.io
+const io = new Server(server);
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
 server.listen(PORT, async () => {
     try {
         await connectToMongoDB();
