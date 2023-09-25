@@ -6,6 +6,7 @@ import { ConnectionState } from './components/ConnectionState';
 import { ConnectionManager } from './components/ConnectionManager';
 import { Events } from './components/Events'
 import { MyForm } from './components/MyForm';
+import Allroutes from './components/Routes/Allroutes';
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [fooEvents, setFooEvents] = useState([]);
@@ -36,6 +37,7 @@ function App() {
   }, []);
   return (
     <div className="App">
+      <Allroutes />
       <ConnectionState isConnected={isConnected} />
       <Events events={fooEvents} />
       <ConnectionManager />
