@@ -23,9 +23,15 @@ io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('message', (data) => {
         console.log('data got', data);
-        const message = new ChatMessage({
 
+        const message = new ChatMessage({
+            sender: data?.userId,
+            content: data?.content,
+            attachments: data?.attachments,
+            chat: data?.chat
         });
+        message.save();
+
         socket.emit('recieved', data.data);
     })
 });

@@ -38,11 +38,11 @@ function App() {
   return (
     <div className="App">
       <Allroutes />
-      <ConnectionState isConnected={isConnected} />
+      {/* <ConnectionState isConnected={isConnected} />
       <Events events={fooEvents} />
       <ConnectionManager />
       <div>data {data}</div>
-      <MyForm />
+      <MyForm /> */}
     </div>
   );
 }
