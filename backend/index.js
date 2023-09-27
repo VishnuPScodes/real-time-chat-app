@@ -6,6 +6,7 @@ import registerUserController from './routes/reg.routes.js';
 import { Server } from "socket.io";
 import { createServer } from 'node:http';
 import { ChatMessage } from './models/message.model.js';
+import { statfsSync } from 'node:fs';
 configDotenv();
 
 const app = express();
@@ -27,7 +28,6 @@ io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('message', (data) => {
         console.log('data got', data);
-
         const message = new ChatMessage({
             sender: data?.userId,
             content: data?.content,
@@ -38,7 +38,32 @@ io.on('connection', (socket) => {
 
         socket.emit('recieved', data.data);
     })
+    let userSocketMap = new Map();
+    userSocketMap.set('userId', socket)
+    function findSocketByUserID(userId) {
+        // Retrieve the socket object associated with the user ID from your data structure (userSocketMap).
+        return userSocketMap.get(userId);
+    }
+    socket.on("private-message", (data) => {
+        const recipientSocket = findSocketByUserID(recipientId);
+        if (recipientSocket) {
+            // Send the private message to the recipient.
+            const message = new ChatMessage({
+                sender: data?.userId,
+                content: data?.content,
+                attachments: data?.attachments,
+                chat: data?.chat
+            });
+            message.save();
+            recipientSocket.emit('private-message', { senderId: data.userId, message: data.message });
+
+        } else {
+
+        }
+    })
 });
+
+
 
 server.listen(PORT, async () => {
     try {
