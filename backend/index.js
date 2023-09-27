@@ -50,13 +50,12 @@ io.on('connection', (socket) => {
             // Send the private message to the recipient.
             const message = new ChatMessage({
                 sender: data?.userId,
-                content: data?.content,
+                content: data?.message,
                 attachments: data?.attachments,
                 chat: data?.chat
             });
             message.save();
             recipientSocket.emit('private-message', { senderId: data.userId, message: data.message });
-
         } else {
 
         }
