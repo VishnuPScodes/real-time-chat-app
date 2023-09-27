@@ -16,10 +16,14 @@ app.use('/register', registerUserController);
 const server = createServer(app);
 //Integrating socket.io
 const io = new Server(server, { cors: { origin: "*" } });
+let arr = [{ 'userId': 'ewewew' }];
 io.on('connection', (socket) => {
+
     io.on('disconnect', () => {
         console.log('user disconnected');
     })
+    socket.join('room1');
+    socket.to('ewewew').emit('weewe');
     console.log('a user connected');
     socket.on('message', (data) => {
         console.log('data got', data);

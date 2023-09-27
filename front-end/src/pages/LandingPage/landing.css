@@ -1,0 +1,43 @@
+
+.container-l{
+    border: 1px solid black;
+    max-width: 1000px;
+    min-height: 50px;
+   margin: auto;
+   display: flex;
+
+}
+.single-chat{
+    border: 1px solid red;
+    height: 80px;
+    width: 40%;
+    display: flex;
+}
+.single-chat:hover{
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+}
+.image-head{
+    border: 1px solid black;
+    height: 100%;
+    width: 80px;
+    border-radius: 50%;
+}
+.user-name{
+    text-align: left;
+    justify-content: center;
+    align-self: center;
+    padding-left: 10px;
+    font-family: 'Poppins';
+    font-weight: 500;
+}
+.message{
+    width: 300px;
+    height: 30px;
+    font-family: 'poppins';
+    font-weight: 400;
+    padding-left: 10px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
