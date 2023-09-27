@@ -35,3 +35,65 @@
   
     padding-left: 10px;
 }
+.container-l{
+    border: 1px solid black;
+    max-width: 1000px;
+    min-height: 50px;
+   margin: auto;
+   display: flex;
+}
+.single-chat{
+    border: 1px solid red;
+    height: 60px;
+    width: 500px;
+    display: flex;
+    margin-left: 10px;
+}
+.single-chat:hover{
+    cursor: pointer;
+    background-color: rgb(230, 225, 225);
+}
+.image-head{
+    border: 1px solid black;
+    height: 60%;
+    width: 40px;
+    border-radius: 50%;
+}
+.user-name{
+    text-align: left;
+    justify-content: center;
+    align-self: center;
+    padding-left: 10px;
+    font-family: 'Poppins';
+    font-weight: 500;
+}
+.message{
+    width: 300px;
+    height: 30px;
+    font-family: 'poppins';
+    font-weight: 400;
+    padding-left: 10px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.participant-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.admin{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+    font-family: 'Poppins';
+    font-weight: 500;
+    margin-right: 10px;
+    background-color: gray;
+    border-radius: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 14px;
+    color: rgb(182, 202, 220);
+}
