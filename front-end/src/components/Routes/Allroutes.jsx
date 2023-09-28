@@ -8,9 +8,8 @@ function Allroutes() {
     return (
         <Routes>
             <Route path='/login' element={<Login />} />
-            <Route path='/' element={<PrivateRoute>
-                <LandingPage />
-            </PrivateRoute>} />
+            <Route path='/' element={
+                <LandingPage />} />
             <Route path='/profile' element={<ProfilePage />} />
         </Routes>
     )
