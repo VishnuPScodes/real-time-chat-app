@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import './login.css'
 import { chakra } from '@chakra-ui/react'
 import { Button, ButtonGroup, VisuallyHidden } from '@chakra-ui/react'
@@ -30,12 +30,25 @@ import { createIcon } from '@chakra-ui/react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { addUserId } from '../../redux/action'
+import { useNavigate } from 'react-router'
 function Login() {
-    const dispatch = useDispatch()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [pic, setPic] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
     const handleSubmit = () => {
-        axios.post('http://localhost:3003/register').then((res) => {
+        let data = {
+            email,
+            user_name: username,
+            password,
+            pro_pic: pic
+        }
+        axios.post('http://localhost:3003/register', data).then((res) => {
             let userId = res.data._id;
             dispatch(addUserId(userId));
+            navigate('/')
         })
     }
     return (
@@ -113,13 +126,17 @@ function Login() {
                             <Stack spacing="5">
                                 <FormControl>
                                     <FormLabel htmlFor="email">User name</FormLabel>
-                                    <Input id="email" type="text" />
+                                    <Input id="name" type="text" onChange={(e) => { setUsername(e.target.value) }} />
                                 </FormControl>
                                 <FormControl>
                                     <FormLabel htmlFor="email">Email</FormLabel>
-                                    <Input id="email" type="email" />
+                                    <Input id="email" type="email" onChange={(e) => { setEmail(e.target.value) }} />
                                 </FormControl>
-                                <PasswordField />
+                                <FormControl>
+                                    <FormLabel htmlFor="email">Email</FormLabel>
+                                    <Input id="email" type="text" onChange={(e) => { setPic(e.target.value) }} />
+                                </FormControl>
+                                <PasswordField onChange={(e) => { setPic(e.target.value) }} />
                             </Stack>
                             <HStack justify="space-between">
                                 <Checkbox defaultChecked>Remember me</Checkbox>

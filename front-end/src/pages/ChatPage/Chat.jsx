@@ -6,12 +6,13 @@ import { IoSend } from 'react-icons/io5'
 import io from 'socket.io-client';
 import { useState, useEffect } from 'react';
 import axios from 'axios'
+import { UseSelector, useSelector } from 'react-redux';
 function Chat() {
     const [socket, setSocket] = useState(null);
     const [recipientId, setRecipientId] = useState(''); // Replace with the recipient's user ID
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState('');
-
+    const userId = useSelector((state) => state?.userId)
 
     useEffect(() => {
         axios.get('http://localhost:3003').then((res) => {
