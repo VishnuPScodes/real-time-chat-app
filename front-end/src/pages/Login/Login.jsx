@@ -27,8 +27,17 @@ import {
 import { forwardRef, useRef } from 'react'
 import { HiEye, HiEyeOff } from 'react-icons/hi'
 import { createIcon } from '@chakra-ui/react'
-
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { addUserId } from '../../redux/action'
 function Login() {
+    const dispatch = useDispatch()
+    const handleSubmit = () => {
+        axios.post('http://localhost:3003/register').then((res) => {
+            let userId = res.data._id;
+            dispatch(addUserId(userId));
+        })
+    }
     return (
         <div>
             {/* <div className='welcome_text'>Welcome to the chat app ....,please login!</div>
@@ -119,7 +128,7 @@ function Login() {
                                 </Button>
                             </HStack>
                             <Stack spacing="6">
-                                <Button>Sign in</Button>
+                                <Button onClick={handleSubmit}>Sign in</Button>
                                 <HStack>
                                     <Divider />
                                     <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
