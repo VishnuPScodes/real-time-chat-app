@@ -1,6 +1,10 @@
 import express from 'express';
 import { getllUsers, saveUser } from '../services/reg.services.js';
 import UserModel from '../models/reg.model.js';
+import jwt from 'jsonwebtoken'
+const newToken = (regData) => {
+    return jwt.sign({ regData }, process.env.JWT_SECRET_KEY);
+};
 
 export const registerUser = async (req, res) => {
     console.log('wboudddyyy ....', req.body);
