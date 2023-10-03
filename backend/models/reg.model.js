@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs'
 
+const UserRoles = {
+    ADMIN: "ADMIN",
+    USER: "USER",
+    SUPER_ADMIN: "SUPER_ADMIN"
+}
+
 export const UserSchema = new mongoose.Schema({
     user_name: {
         required: true,
@@ -23,6 +29,11 @@ export const UserSchema = new mongoose.Schema({
     email: {
         required: true,
         type: String
+    },
+    role: {
+        type: String,
+        enum: Object.values(UserRoles),
+        default: UserRoles.USER
     }
 });
 UserSchema.pre("save", function (next) {
