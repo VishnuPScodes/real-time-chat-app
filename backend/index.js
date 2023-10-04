@@ -6,6 +6,7 @@ import registerUserController from './routes/reg.routes.js';
 import { Server } from "socket.io";
 import { createServer } from 'node:http';
 import { ChatMessage } from './models/message.model.js';
+import messageController from './routes/message.routes.js   '
 import { statfsSync } from 'node:fs';
 configDotenv();
 
@@ -14,6 +15,7 @@ const PORT = process.env.PORT;
 app.use(express.json())
 app.use(cors());
 app.use('/register', registerUserController);
+app.use('/message', messageController);
 const server = createServer(app);
 //Integrating socket.io
 const io = new Server(server, { cors: { origin: "*" } });

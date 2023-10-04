@@ -7,7 +7,7 @@ const newToken = (regData) => {
 };
 
 export const registerUser = async (req, res) => {
-    console.log('wboudddyyy ....', req.body);
+
     try {
         if (!req.body) {
             res.status(400).send({ message: 'Please provide valid datas' })
