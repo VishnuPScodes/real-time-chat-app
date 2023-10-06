@@ -38,3 +38,39 @@
     font-size: 20px;
     margin-left: 10px;
 }
+.send_btn{
+    border: 1px solid red;
+    padding: 10px;
+}
+.send_btn:hover{
+    cursor: pointer;
+}
+.message_display{
+    border: 2px solid green;
+}
+.single_message{
+    background-color: green;
+    border: 1 solid black;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: 600;
+    width:fit-content;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.single_message2{
+    background-color: rgb(50, 152, 242);
+    border: 1px solid black;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: 600;
+    width:fit-content;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    align-self: flex-end;
+    justify-content: flex-end;
+    margin-left: auto;
+}

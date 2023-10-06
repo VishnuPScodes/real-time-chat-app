@@ -17,8 +17,8 @@ function LandingPage() {
 
             </div>
             <div>
-                {/* <Chat /> */}
-                <ProfilePage />
+                <Chat />
+                {/* <ProfilePage /> */}
             </div>
         </div>
     )

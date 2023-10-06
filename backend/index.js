@@ -20,8 +20,12 @@ const server = createServer(app);
 //Integrating socket.io
 const io = new Server(server, { cors: { origin: "*" } });
 let arr = [{ 'userId': 'ewewew' }];
+let number = 0;
+let allUsers = [];
 io.on('connection', (socket) => {
+    number++;
 
+    console.log('number of users', number)
     io.on('disconnect', () => {
         console.log('user disconnected');
     })
@@ -29,6 +33,13 @@ io.on('connection', (socket) => {
     socket.to('ewewew').emit('weewe');
     console.log('a user connected');
     socket.on('message', (data) => {
+        let socketId = socket.id;
+        let userId = data.userId;
+        let userFound = allUsers.find({ userId: socketId });
+        let userData = {
+            [userId]: socketId
+        }
+        allUsers.push(userData);
         console.log('data got', data);
         const message = new ChatMessage({
             sender: data?.userId,
@@ -46,8 +57,10 @@ io.on('connection', (socket) => {
         // Retrieve the socket object associated with the user ID from your data structure (userSocketMap).
         return userSocketMap.get(userId);
     }
+
     socket.on("private-message", (data) => {
-        const recipientSocket = findSocketByUserID(recipientId);
+        console.log('message got ', data);
+        const recipientSocket = findSocketByUserID(data.recipientId);
         if (recipientSocket) {
             // Send the private message to the recipient.
             const message = new ChatMessage({
