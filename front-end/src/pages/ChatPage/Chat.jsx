@@ -12,7 +12,8 @@ function Chat() {
     const [recipientId, setRecipientId] = useState(''); // Replace with the recipient's user ID
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState('');
-    const userId = useSelector((state) => state?.userId)
+    const userId = useSelector((state) => state?.userId);
+    const [send, setSend] = useState(true)
     const [myMessages, setMyMessages] = useState([{
         user: 1,
         message: "hey"
@@ -34,20 +35,24 @@ function Chat() {
         //     setRecipientId(res.data._id);
         // })
         // Connect to the Socket.io server
+        console.log('hitt');
         const newSocket = io('http://localhost:3003'); // Replace with your server's URL
         setSocket(newSocket);
-
+        newSocket.on("recieved", (data) => {
+            console.log('recieved', data)
+        })
         return () => {
             // Disconnect the socket when the component unmounts
             if (newSocket) {
                 newSocket.disconnect();
             }
         };
-    }, []);
+    }, [send]);
 
     const handleSendMessage = () => {
-        socket.emit('private-message', { recipientId, message });
+        socket.emit('message', { recipientId, message });
         setMessage('');
+        setSend(!send);
         alert('message sent');
         if (socket && recipientId && message) {
         }

@@ -8,6 +8,7 @@ import { createServer } from 'node:http';
 import { ChatMessage } from './models/message.model.js';
 import messageController from './routes/message.routes.js   '
 import { statfsSync } from 'node:fs';
+import { log } from 'node:console';
 configDotenv();
 
 const app = express();
@@ -21,7 +22,7 @@ const server = createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 let arr = [{ 'userId': 'ewewew' }];
 let number = 0;
-let allUsers = [];
+let allUsers = {};
 io.on('connection', (socket) => {
     number++;
 
@@ -35,21 +36,33 @@ io.on('connection', (socket) => {
     socket.on('message', (data) => {
         let socketId = socket.id;
         let userId = data.userId;
-        let userFound = allUsers.find({ userId: socketId });
-        let userData = {
-            [userId]: socketId
+        let userFound = allUsers[userId];
+        if (!userFound) {
+            console.log('came here', data);
+            allUsers = { ...allUsers, [userId]: socketId };
+            userFound = allUsers[userId];
+            const message = new ChatMessage({
+                sender: userFound,
+                content: data?.content,
+                attachments: data?.attachments,
+                chat: data?.chat
+            });
+            message.save();
+            socket.broadcast.to(userFound).emit("recieved", data.data)
         }
-        allUsers.push(userData);
-        console.log('data got', data);
-        const message = new ChatMessage({
-            sender: data?.userId,
-            content: data?.content,
-            attachments: data?.attachments,
-            chat: data?.chat
-        });
-        message.save();
+        else {
+            console.log('data got', data);
+            const message = new ChatMessage({
+                sender: data?.userId,
+                content: data?.content,
+                attachments: data?.attachments,
+                chat: data?.chat
+            });
+            message.save();
+            socket.broadcast.to(userFound).emit("recieved", data.data)
+            //socket.emit('recieved', data.data);
+        }
 
-        socket.emit('recieved', data.data);
     })
     let userSocketMap = new Map();
     userSocketMap.set('userId', socket)
