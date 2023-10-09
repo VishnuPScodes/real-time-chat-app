@@ -3,10 +3,13 @@ import './chat.css';
 import React from 'react'
 import { BsLink45Deg } from 'react-icons/bs'
 import { IoSend } from 'react-icons/io5'
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { UseSelector, useSelector } from 'react-redux';
+export const socket = io('http://localhost:3003', {
+    autoConnect: false
+});
 function Chat() {
     const [socket, setSocket] = useState(null);
     const [recipientId, setRecipientId] = useState(''); // Replace with the recipient's user ID
@@ -39,6 +42,7 @@ function Chat() {
         const newSocket = io('http://localhost:3003'); // Replace with your server's URL
         setSocket(newSocket);
         newSocket.on("recieved", (data) => {
+            setMessage(...myMessages, { user: 1, message: data?.message })
             console.log('recieved', data)
         })
         return () => {
@@ -47,17 +51,23 @@ function Chat() {
                 newSocket.disconnect();
             }
         };
-    }, [send]);
+    });
 
     const handleSendMessage = () => {
-        socket.emit('message', { recipientId, message });
+        let datatosend = {
+            content: message,
+            sender: "650d4cc1bea399dae5ea7ed8",
+            recipientId,
+            attatchments: [],
+            chat: "650d4cc1bea399dae5ea7ed8"
+        }
+        socket.emit('message', datatosend);
         setMessage('');
         setSend(!send);
-        alert('message sent');
+        // alert('message sent');
         if (socket && recipientId && message) {
         }
     };
-
     // useEffect(() => {
     //     if (socket) {
     //         socket.on('private-message', (data) => {
@@ -70,9 +80,9 @@ function Chat() {
             <div className="message_display">
                 {myMessages.map((e) => {
                     if (e.user == 1) {
-                        return <div className="single_message">{e.message}</div>
+                        return <div key={e.message} className="single_message">{e.message}</div>
                     }
-                    return <div className="single_message2">{e.message}</div>
+                    return <div key={e.message} className="single_message2">{e.message}</div>
                 })}
 
             </div>

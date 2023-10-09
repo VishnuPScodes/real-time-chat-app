@@ -34,6 +34,7 @@ io.on('connection', (socket) => {
     socket.to('ewewew').emit('weewe');
     console.log('a user connected');
     socket.on('message', (data) => {
+        console.log({ data });
         let socketId = socket.id;
         let userId = data.userId;
         let userFound = allUsers[userId];
@@ -42,13 +43,14 @@ io.on('connection', (socket) => {
             allUsers = { ...allUsers, [userId]: socketId };
             userFound = allUsers[userId];
             const message = new ChatMessage({
-                sender: userFound,
+                sender: data?.userId,
                 content: data?.content,
                 attachments: data?.attachments,
                 chat: data?.chat
             });
+            console.log('user found', userFound, data);
+            io.to(userFound).emit('recieved', data)
             message.save();
-            socket.broadcast.to(userFound).emit("recieved", data.data)
         }
         else {
             console.log('data got', data);
@@ -58,11 +60,12 @@ io.on('connection', (socket) => {
                 attachments: data?.attachments,
                 chat: data?.chat
             });
+            console.log('user found', userFound, data);
+            io.to(userFound).emit('recieved', data)
             message.save();
-            socket.broadcast.to(userFound).emit("recieved", data.data)
+            // socket.emit("recieved", data.data)
             //socket.emit('recieved', data.data);
         }
-
     })
     let userSocketMap = new Map();
     userSocketMap.set('userId', socket)
