@@ -54,11 +54,11 @@ function Chat() {
     useEffect(() => {
         console.log({ we: "ewew", sid: socketRef.current.id })
         socketRef.current.on("recieved", (data) => {
-            setMessage(...myMessages, { user: 1, message: data?.message })
+            setMyMessages([...myMessages, { user: 1, message: data?.content }])
             console.log('recieved', data)
         })
     }, [socketRef.current])
-
+    // console.log('meesssage', myMessages);
     const handleSendMessage = () => {
         let datatosend = {
             content: message,

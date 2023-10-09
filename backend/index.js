@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
                 chat: data?.chat
             });
             console.log('user found', userFound, data);
-            io.to(userFound).emit('recieved', data)
+            io.emit('recieved', data)
             message.save();
         }
         else {
@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
                 chat: data?.chat
             });
             console.log('user found', userFound, data);
-            io.to(userFound).emit('recieved', data)
+            io.emit('recieved', data)
             message.save();
             // socket.emit("recieved", data.data)
             //socket.emit('recieved', data.data);

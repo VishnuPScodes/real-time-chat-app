@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
 import './login.css'
-import { chakra } from '@chakra-ui/react'
+import { Select, ToastOptionProvider, chakra } from '@chakra-ui/react'
 import { Button, ButtonGroup, VisuallyHidden } from '@chakra-ui/react'
 import {
     Box,
@@ -36,6 +36,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [pic, setPic] = useState('');
+    const [date, setDate] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const handleSubmit = () => {
@@ -79,7 +80,7 @@ function Login() {
             >
                 <Stack spacing="8">
                     <Stack spacing="6">
-                        <Logo />
+
                         <Stack
                             spacing={{
                                 base: '2',
@@ -135,6 +136,17 @@ function Login() {
                                 <FormControl>
                                     <FormLabel htmlFor="email">Email</FormLabel>
                                     <Input id="email" type="text" onChange={(e) => { setPic(e.target.value) }} />
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel htmlFor="email">Date of birth</FormLabel>
+                                    <Input id="email" type="date" onChange={(e) => { setDate(e.target.value) }} />
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel htmlFor="email">Gender</FormLabel>
+                                    <Select>
+                                        <option value='option1'>Male</option>
+                                        <option value='option2'>Female</option>
+                                    </Select>
                                 </FormControl>
                                 <PasswordField onChange={(e) => { setPic(e.target.value) }} />
                             </Stack>
