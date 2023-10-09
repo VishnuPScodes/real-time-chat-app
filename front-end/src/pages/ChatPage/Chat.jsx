@@ -1,19 +1,20 @@
 
 import './chat.css';
-import React from 'react'
+import React, { useRef } from 'react'
 import { BsLink45Deg } from 'react-icons/bs'
 import { IoSend } from 'react-icons/io5'
 import { io } from 'socket.io-client';
 import { useState, useEffect } from 'react';
 import axios from 'axios'
-import { UseSelector, useSelector } from 'react-redux';
-export const socket = io('http://localhost:3003', {
-    autoConnect: false
-});
+import { useSelector } from 'react-redux';
+// export const socketRef.current = io('http://localhost:3003', {
+//     autoConnect: false
+// });
 function Chat() {
-    const [socket, setSocket] = useState(null);
+    // const [socketRef.current, setSocket] = useState(null);
     const [recipientId, setRecipientId] = useState(''); // Replace with the recipient's user ID
     const [message, setMessage] = useState('');
+    const socketRef = useRef();
     const [messages, setMessages] = useState('');
     const userId = useSelector((state) => state?.userId);
     const [send, setSend] = useState(true)
@@ -33,25 +34,30 @@ function Chat() {
         user: 2,
         message: "good"
     }])
+
     useEffect(() => {
         // axios.get('http://localhost:3003').then((res) => {
         //     setRecipientId(res.data._id);
         // })
         // Connect to the Socket.io server
-        console.log('hitt');
-        const newSocket = io('http://localhost:3003'); // Replace with your server's URL
-        setSocket(newSocket);
-        newSocket.on("recieved", (data) => {
+        const newSocket = io('http://localhost:3003');
+        socketRef.current = newSocket// Replace with your server's URL
+
+        return () => {
+            // Disconnect the socketRef.current when the component unmounts
+            socketRef.current.disconnect();
+        };
+    }, []);
+    useEffect(() => {
+        console.log({ x: socketRef.current })
+    }, [socketRef?.current])
+    useEffect(() => {
+        console.log({ we: "ewew", sid: socketRef.current.id })
+        socketRef.current.on("recieved", (data) => {
             setMessage(...myMessages, { user: 1, message: data?.message })
             console.log('recieved', data)
         })
-        return () => {
-            // Disconnect the socket when the component unmounts
-            if (newSocket) {
-                newSocket.disconnect();
-            }
-        };
-    });
+    }, [socketRef.current])
 
     const handleSendMessage = () => {
         let datatosend = {
@@ -61,22 +67,22 @@ function Chat() {
             attatchments: [],
             chat: "650d4cc1bea399dae5ea7ed8"
         }
-        socket.emit('message', datatosend);
+        socketRef.current.emit('message', datatosend);
         setMessage('');
         setSend(!send);
         // alert('message sent');
-        if (socket && recipientId && message) {
+        if (socketRef.current && recipientId && message) {
         }
     };
     // useEffect(() => {
-    //     if (socket) {
-    //         socket.on('private-message', (data) => {
+    //     if (socketRef.current) {
+    //         socketRef.current.on('private-message', (data) => {
     //             setMessages([...messages, data]);
     //         });
     //     }
-    // }, [socket, messages]);
+    // }, [socketRef.current, messages]);
     return (
-        <div className='chat-container'>
+        <div className='chat-container' ref={socketRef}>
             <div className="message_display">
                 {myMessages.map((e) => {
                     if (e.user == 1) {
