@@ -6,7 +6,8 @@ import registerUserController from './routes/reg.routes.js';
 import { Server } from "socket.io";
 import { createServer } from 'node:http';
 import { ChatMessage } from './models/message.model.js';
-import messageController from './routes/message.routes.js   '
+import messageController from './routes/message.routes.js';
+import signinController from './routes/login.routes.js'
 import { statfsSync } from 'node:fs';
 import { log } from 'node:console';
 configDotenv();
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use(cors());
 app.use('/register', registerUserController);
 app.use('/message', messageController);
+app.use('/signin', signinController);
 const server = createServer(app);
 //Integrating socket.io
 const io = new Server(server, { cors: { origin: "*" } });
@@ -60,7 +62,7 @@ io.on('connection', (socket) => {
                 chat: data?.chat
             });
             console.log('user found', userFound, data);
-            io.to(userFound).emit('recieved', data)
+            io.to(userFound).emit('recieved', data);
             message.save();
             // socket.emit("recieved", data.data)
             //socket.emit('recieved', data.data);

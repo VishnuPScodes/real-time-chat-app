@@ -36,6 +36,7 @@ export const UserSchema = new mongoose.Schema({
         default: UserRoles.USER
     }
 });
+
 UserSchema.pre("save", function (next) {
     if (!this.isModified("password")) {
         return next();
@@ -43,7 +44,8 @@ UserSchema.pre("save", function (next) {
     let hash = bcrypt.hashSync(this.password, 8);
     this.password = hash;
     return next();
-})
+});
+
 UserSchema.methods.checkPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 }
