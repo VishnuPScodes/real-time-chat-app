@@ -46,9 +46,16 @@ UserSchema.pre("save", function (next) {
     return next();
 });
 
-UserSchema.methods.checkPassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
+UserSchema.methods.checkPassword = function (user, password) {
+    console.log(
+        'the function is called',
+        user.password,
+        user
+    );
+    return bcrypt.compareSync(password, user.password);
+
 }
+
 const UserModel = mongoose.model("users", UserSchema);
 
 export default UserModel;

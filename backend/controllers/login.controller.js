@@ -1,9 +1,9 @@
 import { configDotenv } from "dotenv";
 import UserModel from "../models/reg.model.js";
+import jwt from 'jsonwebtoken'
 
 
-
-configDotenv()
+configDotenv();
 let secretkey = process.env.JWT_SECRET_KEY
 const newToken = (regData) => {
     if (secretkey) {
@@ -11,7 +11,6 @@ const newToken = (regData) => {
         return jwt.sign({ regData }, secretkey);
     }
 };
-
 
 export const userSignIn = async (req, res) => {
     if (!req.body) {
@@ -22,9 +21,9 @@ export const userSignIn = async (req, res) => {
         throw new Error('User does not exists!')
     }
     let instance = new UserModel();
-    let checkPassword = instance.checkPassword(req.body.password);
+    let checkPassword = instance.checkPassword(user, req.body.password);
     if (!checkPassword) {
-        throw new Error('Email or password does not match');
+        return res.status(400).send({ status: 'Fails', message: 'Email or password does not match!' });
     }
     else {
         let userData = {
@@ -35,4 +34,3 @@ export const userSignIn = async (req, res) => {
         return res.status(201).send({ message: "User signed in", token: newtoken, data: user });
     }
 }
-

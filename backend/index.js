@@ -67,7 +67,7 @@ io.on('connection', (socket) => {
             // socket.emit("recieved", data.data)
             //socket.emit('recieved', data.data);
         }
-    })
+    });
     let userSocketMap = new Map();
     userSocketMap.set('userId', socket)
     function findSocketByUserID(userId) {
@@ -93,8 +93,6 @@ io.on('connection', (socket) => {
         }
     })
 });
-
-
 
 server.listen(PORT, async () => {
     try {

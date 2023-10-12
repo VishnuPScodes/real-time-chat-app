@@ -1,6 +1,6 @@
 
 import './chat.css';
-import React, { useRef } from 'react'
+import React, { useId, useRef } from 'react'
 import { BsLink45Deg } from 'react-icons/bs'
 import { IoSend } from 'react-icons/io5'
 import { io } from 'socket.io-client';
@@ -34,7 +34,11 @@ function Chat() {
         user: 2,
         message: "good"
     }])
-
+    const userMongooseID = useSelector((state) => state.userId);
+    //getting user's past messages
+    useEffect(() => {
+        axios.get(`http://localhost:3003/messages/${userMongooseID}`);
+    }, [])
     useEffect(() => {
         // axios.get('http://localhost:3003').then((res) => {
         //     setRecipientId(res.data._id);
@@ -56,8 +60,8 @@ function Chat() {
         socketRef.current.on("recieved", (data) => {
             setMyMessages([...myMessages, { user: 1, message: data?.content }])
             console.log('recieved', data)
-        })
-    }, [socketRef.current])
+        });
+    }, [socketRef.current]);
     // console.log('meesssage', myMessages);
     const handleSendMessage = () => {
         let datatosend = {
@@ -83,6 +87,7 @@ function Chat() {
     // }, [socketRef.current, messages]);
     return (
         <div className='chat-container' ref={socketRef}>
+            <div className="header_nav">ee</div>
             <div className="message_display">
                 {myMessages.map((e) => {
                     if (e.user == 1) {
