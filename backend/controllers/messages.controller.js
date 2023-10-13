@@ -1,8 +1,6 @@
 import { getAllUserMessager, sendMessage } from "../services/messages.service.js"
 
 
-
-
 export const addMessage = async (req, res) => {
     console.log('sender got');
     const { content, sender, attatchments, chat } = req.body

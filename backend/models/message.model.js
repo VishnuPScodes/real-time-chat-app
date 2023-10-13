@@ -8,6 +8,11 @@ const chatMessageSchema = new Schema(
             ref: "User",
             required: true
         },
+        reciever: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        },
         content: {
             type: String,
         },
