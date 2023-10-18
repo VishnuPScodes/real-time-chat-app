@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
             allUsers = { ...allUsers, [userId]: socketId };
             userFound = allUsers[userId];
             const message = new ChatMessage({
-                sender: data?.userId,
+                sender: data?.sender,
                 content: data?.content,
                 attachments: data?.attachments,
                 chat: data?.chat,
@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
         else {
             console.log('data got', data);
             const message = new ChatMessage({
-                sender: data?.userId,
+                sender: data?.sender,
                 content: data?.content,
                 attachments: data?.attachments,
                 chat: data?.chat,

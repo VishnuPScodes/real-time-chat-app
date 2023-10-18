@@ -4,7 +4,6 @@
     max-width: 1000px;
     min-height: 50px;
    margin: auto;
-   display: flex;
 
 }
 .single-chat{
@@ -18,11 +17,22 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
 }
+.user-div{
+    overflow-y: scroll;
+}
 .user_pro_div{
    border: 1px solid blue;
-   height: 80px;
+   height: 60px;
    width: auto;
-    
+}
+.user_image{
+    border: 1px solid blue;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .image-head{
     border: 1px solid black;

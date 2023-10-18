@@ -1,20 +1,43 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './landing.css'
 import Chat from '../ChatPage/Chat'
 import ProfilePage from '../ProfilePage/ProfilePage'
+import axios from 'axios';
 function LandingPage() {
+    const [users, setUsers] = useState([]);
+    const [load, setLoad] = useState(true)
+    useEffect(() => {
+        axios.get(`http://localhost:3003/register`).then((e) => {
+            setUsers(e.data)
+            setLoad(false);
+        }).catch((e) => {
+            setLoad(false);
+        })
+    }, [])
     return (
         <div className='container-l'>
-            <div className="user_pro_div">sss</div>
-            <div className='single-chat' >
-                <div className='image-head'>
-                    <img height={'100%'} width={'100%'} style={{ borderRadius: "50%" }} src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" alt="" />
+            <div className="send_cont">
+                <div className="user_pro_div">
+                    <div className="user_image"></div>
                 </div>
-                <div>
-                    <div className='user-name'> Vishnu </div>
-                    <div className='message'>sndjsdsdhsdhsgdhsgdhsgdhsgdhsgdhsgdhsgdhdhsghsgdhgshdghs</div>
-                </div>
+                {load == true ? <div>Loading...</div> :
+                    <div className='user-div'>
+                        {users.map((e) => {
+                            return <div className='single-chat' >
+                                <div className='image-head'>
+                                    <img height={'100%'} width={'100%'} style={{ borderRadius: "50%" }} src={e.pro_pic} alt="" />
+                                </div>
+                                <div>
+                                    <div className='user-name'>{e.user_name} </div>
+                                    <div className='message'>{e.age}</div>
+                                </div>
+
+                            </div>
+                        })}
+                    </div>
+                }
+
 
             </div>
             <div>
