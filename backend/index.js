@@ -47,7 +47,8 @@ io.on('connection', (socket) => {
                 sender: data?.userId,
                 content: data?.content,
                 attachments: data?.attachments,
-                chat: data?.chat
+                chat: data?.chat,
+                reciever: data?.reciever
             });
             console.log('user found', userFound, data);
             io.to(userFound).emit('recieved', data)
@@ -59,7 +60,8 @@ io.on('connection', (socket) => {
                 sender: data?.userId,
                 content: data?.content,
                 attachments: data?.attachments,
-                chat: data?.chat
+                chat: data?.chat,
+                reciever: data?.reciever
             });
             console.log('user found', userFound, data);
             io.to(userFound).emit('recieved', data);

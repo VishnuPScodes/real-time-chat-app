@@ -67,6 +67,7 @@ function Chat() {
         let datatosend = {
             content: message,
             sender: "650d4cc1bea399dae5ea7ed8",
+            reciever: "650d4cc1bea399dae5ea7ed8",
             recipientId,
             attatchments: [],
             chat: "650d4cc1bea399dae5ea7ed8"
